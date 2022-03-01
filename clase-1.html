@@ -1,0 +1,578 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Clase 1: Introducción a IFC</title>
+
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/white.css">
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+  <!-- Custom styles -->
+  <style>
+      .col {
+          flex: 1;
+      }
+
+      .block {
+          display: block;
+      }
+  </style>
+
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <section>
+      <h2>🏠 Introducción a IFC</h2>
+    </section>
+
+    <!-- Introducción al curso -->
+
+    <section>
+      <section>
+
+        <h2>Instructor</h2>
+
+        <div style="display: flex; height: 40vh">
+
+          <div class="col">
+            <p>Antonio González Viegas</p>
+            <a class="block"
+               href="https://www.linkedin.com/in/antonio-gonz%C3%A1lez-viegas-8b2326151/?originalSubdomain=es">💼
+              Linkedin</a>
+            <a class="block" href="https://twitter.com/agviegasBIM">🐦 Twitter</a>
+            <a class="block" href="https://discord.gg/FXfyR4XrKT">🐽 Discord</a>
+          </div>
+
+          <div class="col">
+            <img src="static/images/ansoni.jpeg">
+          </div>
+        </div>
+
+      </section>
+
+        <section>
+          <h2>Experiencia</h2>
+
+          <p class="block">👨‍💼 Arquitecto por la E.T.S.A.S.</p>
+          <p class="block">👨‍💻 Desarrollador BIM en CYPE</p>
+          <p class="block">🚀 Creador de IFC.js</p>
+          <p class="block">🏠 Desarrollador de gemelos digitales en Autility</p>
+
+        </section>
+
+      <section>
+        <h2>Objetivos del curso</h2>
+
+        <p class="block">🕵️‍♂️Exploración de IFCs</p>
+        <p class="block">💪 Entender capacidades y limitaciones</p>
+        <p class="block">🌳 Entender cómo se estructuran los datos</p>
+        <p class="block">❌ Diagnosticar errores comunes</p>
+
+      </section>
+
+      <section>
+        <h2>👨‍🏫 Clases</h2>
+
+        <p class="block"><b>Clase 1</b>: introducción, herramientas y sintaxis</p>
+        <p class="block"><b>Clase 2</b>: datos, estructura espacial y geometría</p>
+        <p class="block"><b>Clase 3</b>: propiedades, mediciones y errores</p>
+        <p class="block">Prácticas - consultas</p>
+
+      </section>
+
+      <section>
+        <h2>Material del curso</h2>
+
+        <p class="block">📃 Apuntes</p>
+        <p class="block">💻 Presentaciones</p>
+        <p class="block">🎥 Vídeos</p>
+        <p class="block">🏠 IFCs de prácticas</p>
+        <p class="block">📱 Mi contacto</p>
+
+      </section>
+
+      <section>
+        <h2>⚖️ ¿Objetividad?</h2>
+      </section>
+
+    </section>
+
+
+    <!-- Introduccion -->
+    <section>
+
+      <section data-auto-animate>
+        <h2>🤷‍♂️IFC</h2>
+      </section>
+      <section data-auto-animate>
+        <h2>🤷‍♂️IFC</h2>
+        <p>¿Qué sabemos?</p>
+      </section>
+      <section data-auto-animate>
+        <h2>🤷‍♂️IFC</h2>
+        <p>¿Qué sabemos?</p>
+        <p>¿Abierto?</p>
+      </section>
+      <section data-auto-animate>
+        <h2>🤷‍♂️IFC</h2>
+        <p>¿Qué sabemos?</p>
+        <p>¿Abierto?</p>
+        <p>¿Limitaciones? ¿Capacidad?</p>
+      </section>
+
+      <!-- Puntos basicos del IFC -->
+      <!-- Open BIM -->
+      <!-- La importancia del open BIM -->
+
+      <section
+              data-background-iframe="https://www.youtube.com/embed/tGx-EMuruq8?autoplay=1&controls=0"
+              data-background-interactive>
+
+        <h2 style="color: white">The BIM problem: interoperability</h2>
+
+      </section>
+
+      <section>
+        <h2>Tipos de archivo</h2>
+        <p>📃 Texto (IFC, csv, JSON, ...)</p>
+        <p>📄 Binario (.rvt, .dwg, .pln, ...)</p>
+      </section>
+
+      <section
+              data-background-iframe="https://github1s.com/IFCjs/web-ifc-viewer/blob/HEAD/example/files/web-ifc.wasm"
+              data-background-interactive>
+      </section>
+
+      <!-- Limitaciones del open BIM -->
+
+      <section>
+        <h2>Limitaciones del BIM abierto</h2>
+        <p>🤖 Limitaciones técnicas</p>
+        <p>🛒 Limitaciones de mercado</p>
+        <p>🏠 Limitaciones del IFC</p>
+      </section>
+
+      <!-- buildingSMART -->
+
+      <section
+              data-background-iframe="https://www.buildingsmart.org/"
+              data-background-interactive>
+      </section>
+
+      <!-- versiones -->
+
+      <section
+              data-background-iframe="https://technical.buildingsmart.org/standards/ifc/ifc-schema-specifications/"
+              data-background-interactive>
+      </section>
+
+      <!-- MVD -->
+
+      <section
+              data-background-iframe="https://technical.buildingsmart.org/standards/ifc/mvd/"
+              data-background-interactive>
+      </section>
+
+      <!-- Example 1: web ifc viewer -->
+
+<!--      <section>-->
+
+<!--        <p>How it works</p>-->
+
+<!--        <pre><code class="hljs javascript" data-line-numbers="|1|3-5|7-9|11-21">import { IfcViewerAPI } from 'web-ifc-viewer';-->
+
+<!--// Initialize IFC.js-->
+<!--const container = document.getElementById('viewer-container');-->
+<!--const viewer = new IfcViewerAPI({ container });-->
+
+<!--// Add scene elements-->
+<!--viewer.addAxes();-->
+<!--viewer.addGrid();-->
+
+<!--// Set up input element-->
+<!--const input = document.getElementById("file-input");-->
+
+<!--input.addEventListener("change",-->
+<!--  async (changed) => {-->
+<!--	const file = changed.target.files[0];-->
+<!--	const ifcURL = URL.createObjectURL(file);-->
+<!--	viewer.IFC.loadIfcUrl(ifcURL);-->
+<!--  },-->
+<!--  false-->
+<!--);-->
+<!--						</code></pre>-->
+<!--      </section>-->
+
+<!--      <section-->
+<!--              data-background-iframe="https://github1s.com/agviegas/BIMrras-IFCjs-course/tree/main/Module%205%20-%20IFCjs/exercise%202"-->
+<!--              data-background-interactive>-->
+<!--      </section>-->
+
+<!--      <section data-background-iframe="https://ifcjs.github.io/web-ifc-viewer/example/index"-->
+<!--               data-background-interactive>-->
+
+<!--        <div style="height: 80vh; display: flex; justify-content: center; align-items: flex-start">-->
+<!--          <p>Example 1: How it works</p>-->
+<!--        </div>-->
+
+<!--      </section>-->
+
+<!--      &lt;!&ndash; Documentation &ndash;&gt;-->
+<!--      <section data-background-iframe="https://ifcjs.github.io/info/" data-background-interactive>-->
+<!--      </section>-->
+
+<!--      &lt;!&ndash; Example 2: twitter &ndash;&gt;-->
+<!--      <section>-->
+<!--        <p>Example 2: Making a BIM tool inside Twitter</p>-->
+<!--        <div style="display: flex; justify-content: center">-->
+<!--          <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Everyone is prejudiced, including me. For example, if-->
+<!--            you talk to me about how your BIM processes implement Big data or AI, I&#39;m not likely to take you very-->
+<!--            seriously anymore.</p>&mdash; ansoni (@agviegasBIM) <a-->
+<!--                  href="https://twitter.com/agviegasBIM/status/1441548986028986377?ref_src=twsrc%5Etfw">September 24,-->
+<!--            2021</a></blockquote>-->
+<!--          <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+<!--        </div>-->
+
+<!--      </section>-->
+
+
+<!--      &lt;!&ndash; Example 3: city lite &ndash;&gt;-->
+<!--      <section data-background-iframe="https://github1s.com/Parametricos/CityLite" data-background-interactive>-->
+<!--        <div style="color: white; height: 80vh; display: flex; justify-content: center; align-items: flex-start">-->
+<!--          <div style=" padding: 1rem; background: rgba(80,80,80,0.7)">-->
+<!--            <p>Example 3: BIM + GIS in 48 hours</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </section>-->
+
+<!--      <section data-background-iframe="https://parametricos-cassini-hackathon.vercel.app/" data-background-interactive>-->
+<!--      </section>-->
+
+<!--      &lt;!&ndash; Example 4: desktop app &ndash;&gt;-->
+<!--      <section>-->
+<!--        <h4>Example 4: desktop application</h4>-->
+<!--      </section>-->
+
+<!--      &lt;!&ndash; Open collective &ndash;&gt;-->
+<!--      <section>-->
+<!--        <div style="margin-top: 3rem">-->
+<!--          <h4>Sustainability</h4>-->
+<!--          <script src="https://opencollective.com/ifcjs/banner.js"></script>-->
+<!--        </div>-->
+<!--      </section>-->
+
+    </section>
+
+    <section>
+
+      <!-- Cómo navegar un IFC -->
+
+      <section>
+        <h2>⛵ Navegar por un IFC</h2>
+      </section>
+
+      <section
+              data-background-iframe="https://github1s.com/IFCjs/test-ifc-files"
+              data-background-interactive>
+      </section>
+
+      <section>
+        <h2>🔨 Modeladores BIM</h2>
+        <p>❌ Dependencia de licencia</p>
+        <p>❌ Limitaciones técnicas (mapeo)</p>
+        <p>❌ Recursos necesarios</p>
+        <p>❌ Curva de aprendizaje</p>
+      </section>
+
+      <section>
+        <h2>🔎 Visores IFC</h2>
+        <p>✅ Gratis</p>
+        <p>✅ Ligeros</p>
+        <p>✅ Intuitivos</p>
+        <p>❌ Poco control</p>
+      </section>
+
+      <section
+              data-background-iframe="https://bimvision.eu/download/"
+              data-background-interactive>
+      </section>
+
+      <section>
+        <h2>👨‍💻 IDEs</h2>
+        <p>✅ Gratis</p>
+        <p>✅ Ligeros</p>
+        <p>✅ Mucho control</p>
+        <p>❌ Poco intuitivos</p>
+      </section>
+
+      <section
+              data-background-iframe="https://github1s.com/microsoft/vscode"
+              data-background-interactive>
+      </section>
+
+      <section>
+        <h2>👨‍💻 Librerías</h2>
+        <p>✅ Gratis</p>
+        <p>✅ Ligeras</p>
+        <p>✅ Mucho control</p>
+        <p>✅ Creación de aplicaciones</p>
+        <p>❌ Requieren programación</p>
+      </section>
+
+      <section
+              data-background-iframe="https://ifcjs.github.io/info/"
+              data-background-interactive>
+      </section>
+
+      <section data-background-iframe="https://ifcjs.github.io/web-ifc-viewer/example/index"
+               data-background-interactive>
+      </section>
+
+      <section
+              data-background-iframe="https://github1s.com/agviegas/BIMrras-IFCjs-course/tree/main/Module%205%20-%20IFCjs/exercise%202"
+              data-background-interactive>
+      </section>
+
+      <section
+              data-background-iframe="https://github1s.com/Parametricos/CityLite/blob/HEAD/frontend/README.md"
+              data-background-interactive>
+      </section>
+
+      <section
+              data-background-iframe="https://parametricos-cassini-hackathon.vercel.app/"
+              data-background-interactive>
+      </section>
+
+      <section>
+        <h2>🐒 BlenderBIM</h2>
+        <p>✅ Gratis</p>
+        <p>✅ Ligero</p>
+        <p>✅ Mucho control</p>
+        <p>❌ Requiere tiempo para aprenderlo</p>
+      </section>
+
+      <section data-background-iframe="https://blenderbim.org/"
+               data-background-interactive>
+      </section>
+
+    </section>
+
+    <!-- Documentación -->
+
+    <section>
+
+      <section>
+        <h2>📚 Documentación</h2>
+        <ul>
+          <li>
+            <a href="https://technical.buildingsmart.org/resources/ifcimplementationguidance/"> Guías de implementación</a> (especialmente <a href="https://standards.buildingsmart.org/documents/Implementation/IFC2x_Model_Implementation_Guide_V2-0b.pdf">ésta</a>).
+          </li>
+          <li>
+            <a href="https://standards.buildingsmart.org/IFC/RELEASE/"> Definiciones del esquema.</a>
+          </li>
+          <li>
+            <a href="https://discord.gg/FXfyR4XrKT"> Comunidad de IFC.js.</a>
+          </li>
+        </ul>
+      </section>
+
+      <section data-background-iframe="https://standards.buildingsmart.org/documents/Implementation/IFC2x_Model_Implementation_Guide_V2-0b.pdf"
+               data-background-interactive>
+      </section>
+
+      <section data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/"
+               data-background-interactive>
+      </section>
+
+    </section>
+
+    <!-- Aspectos internos del IFC -->
+
+    <section>
+
+      <section>
+        <h2>🧱 IFC y POO</h2>
+      </section>
+
+      <section>
+        <h2>¿Formato o esquema?</h2>
+      </section>
+
+      <section data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcsharedbldgelements/lexical/ifcwallstandardcase.htm"
+               data-background-interactive>
+      </section>
+
+      <section>
+        <h2>🍎🍏 Clases e instancias</h2>
+        <p>Clase: manzana.</p>
+        <p>Atributos: color, peso, dimensiones, tipo de manzana.</p>
+        <p>Instancia: una manzana verde de 300g y 10cm3</p>
+      </section>
+
+      <section>
+        <h2>🚗➡🚓 Herencia</h2>
+        <p>Todos los coches de policía son coches, pero no todos los coches son de policía.</p>
+      </section>
+
+      <section>
+        <h2>Sin herencia:</h2>
+        <p>🍎 Clase: manzana.</p>
+        <p>Atributos: color, peso, dimensiones, tipo de manzana.</p>
+        <p>🍐 Clase: pera.</p>
+        <p>Atributos: color, peso, dimensiones, tipo de pera.</p>
+      </section>
+
+      <section>
+        <h2>Con herencia:</h2>
+        <p>🌰 Clase: fruta.</p>
+        <p>Atributos: color, peso, dimensiones.</p>
+        <p>🍎 Clase: manzana (hereda de fruta).</p>
+        <p>Atributos: tipo de manzana.</p>
+        <p>🍐 Clase: pera (hereda de fruta).</p>
+        <p>Atributos: tipo de pera.</p>
+      </section>
+
+      <section>
+        <h2>Con herencia:</h2>
+        <p>🌰 Clase: fruta.</p>
+        <p>Atributos: color, peso, dimensiones.</p>
+        <p>🍎 Clase: manzana (hereda de fruta).</p>
+        <p>Atributos: tipo de manzana.</p>
+        <p>🍐 Clase: pera (hereda de fruta).</p>
+        <p>Atributos: tipo de pera.</p>
+      </section>
+
+      <section>
+        <h2>Con herencia:</h2>
+        <p>🏐 Clase: IfcProduct.</p>
+        <p>Atributos: ObjectPlacement, Representation.</p>
+        <p>🚪 Clase: IfcDoor (hereda de IfcProduct).</p>
+        <p>Atributos: OverallHeight, OverallWidth.</p>
+        <p>🧱 Clase: IfcWallStandardCase (hereda de IfcProduct).</p>
+        <p>Atributos: -.</p>
+      </section>
+
+      <section>
+        <h2>¿Por qué vemos datos?</h2>
+                <pre><code class="hljs javascript">#186 = IFCWALLSTANDARDCASE('2idC0G3ezCdhA9WVjWemc$',#41,'Muro',$,'Muro con capa de yeso',#155,#182,'163541');
+        						</code></pre>
+      </section>
+
+      <section data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcsharedbldgelements/lexical/ifcwallstandardcase.htm"
+               data-background-interactive>
+      </section>
+
+    </section>
+
+    <!-- Sintaxis STEP -->
+
+    <section>
+
+      <section>
+        <h2>IFC no depende del formato</h2>
+        <p>Pero el formato STEP es el más común.</p>
+      </section>
+
+      <section>
+        <h2>2 secciones</h2>
+        <p>😶 Sección de cabecera</p>
+        <p>📃 Sección de datos</p>
+      </section>
+
+      <section data-background-iframe="https://en.wikipedia.org/wiki/ISO_10303-21"
+               data-background-interactive>
+      </section>
+
+      <section>
+        <h2>Definición semántica: express</h2>
+      </section>
+
+      <section data-background-iframe="https://en.wikipedia.org/wiki/EXPRESS_(data_modeling_language)"
+               data-background-interactive>
+      </section>
+
+      <section>
+        <h2>Anatomía de un objeto STEP</h2>
+        <pre><code class="hljs javascript">#EXPRESSID = CLASSNAME(PROPERTIES);
+        						</code></pre>
+      </section>
+
+      <section>
+        <h2>Tipos de atributos</h2>
+        <p> Número: <b>2.</b> | <b>3.291</b> | <b>495.21</b> | etc </p>
+        <p> Texto: <b>'Ejemplo de texto'</b> | etc </p>
+        <p> Enum: <b>.CURVE.</b> | <b>.AREA.</b> | etc </p>
+        <p> ExpressID: <b>#392</b> | <b>#23</b> | etc </p>
+        <p> Colección: <b>(3.2, 2.1, 4.5)</b> | etc </p>
+        <p> Booleano: <b>'.T.'</b> | <b>'.F.'</b> </p>
+        <p> Nada: <b>$</b> </p>
+
+      </section>
+
+      <section>
+        <h2>Comprobando tipos de datos</h2>
+        <pre><code class="hljs javascript">#186 = IFCWALLSTANDARDCASE('2idC0G3ezCdhA9WVjWemc$',#41,'Muro',$,'Muro con capa de yeso',#155,#182,'163541');
+        						</code></pre>
+      </section>
+
+      <section>
+        <h2>GUID vs ExpressID</h2>
+        <pre><code class="hljs javascript">#186 = IFCWALLSTANDARDCASE('2idC0G3ezCdhA9WVjWemc$',#41,'Muro',$,'Muro con capa de yeso',#155,#182,'163541');
+        						</code></pre>
+      </section>
+
+      <section data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcsharedbldgelements/lexical/ifcwallstandardcase.htm"
+               data-background-interactive>
+      </section>
+
+      <section>
+        <h2>Propiedades directas / indirectas</h2>
+        <pre><code class="hljs javascript">#186 = IFCWALLSTANDARDCASE('2idC0G3ezCdhA9WVjWemc$',#41,'Muro',$,'Muro con capa de yeso',#155,#182,'163541');
+        						</code></pre>
+      </section>
+
+      <section>
+        <h2>Codificación</h2>
+        <p>ISO 10646</p>
+        <p>ISO 10303-11</p>
+        <pre><code class="hljs javascript">#186= IFCWALLSTANDARDCASE('2idC0G3ezCdhA9WVjWemc$',#41,'Muro b\X2\00E1\X0\sico:Partici\X2\00F3\X0\n con capa de yeso:163541',$,'Muro b\X2\00E1\X0\sico:Partici\X2\00F3\X0\n con capa de yeso',#155,#182,'163541');
+        						</code></pre>
+      </section>
+
+    </section>
+
+    <section>
+      <h2>🎉 ¡Gracias por vuestra atención!</h2>
+    </section>
+
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2/plugin/notes/notes.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2/plugin/markdown/markdown.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2/plugin/highlight/highlight.js"></script>
+<script>
+	// More info about initialization & config:
+	// - https://revealjs.com/initialization/
+	// - https://revealjs.com/config/
+	Reveal.initialize({
+		hash: true,
+
+		// Learn about plugins: https://revealjs.com/plugins/
+		plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+	});
+</script>
+
+</body>
+</html>
