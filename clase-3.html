@@ -1,0 +1,1126 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Clase 3: Geometría, propiedades y errores</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+    <!-- Custom styles -->
+    <style>
+        .col {
+            flex: 1;
+        }
+
+        .block {
+            display: block;
+        }
+    </style>
+
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section>
+            <h2>🧊📚🐞 Geometría, propiedades y errores</h2>
+        </section>
+
+        <section>
+
+            <p class="block"><b>🧊 Geometría:</b> todo lo visible en los visores IFC 3d.</p>
+            <p class="block"><b>📚 Propiedades:</b> información no geométrica.</p>
+            <p class="block"><b>🐞 Errores:</b> errores más comunes.</p>
+
+        </section>
+
+        <section>
+
+            <h2>Geometría</h2>
+
+            <p class="block">🚪 Productos</p>
+            <p class="block">🌍 Localización</p>
+            <p class="block">🃏🤡 Representaciones</p>
+            <p class="block">🧊 Tipos de representación</p>
+
+        </section>
+
+        <section>
+
+            <section>
+
+                <h2>🚪 Productos</h2>
+
+                <p class="block">Objetos con representación en el espacio 3D.</p>
+
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/FINAL/HTML/ifckernel/lexical/ifcproduct.htm"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <h2>Ejemplo: Muro</h2>
+                <pre><code class="hljs">// Producto
+#186= IFCWALLSTANDARDCASE('2idC0G3ezCdhA9WVjWemc$',#41,'63541',$,'Muro',#155,#182,'163541');
+// Ubicación
+#155= IFCLOCALPLACEMENT(#136,#154);
+// Geometría
+#182= IFCPRODUCTDEFINITIONSHAPE($,$,(#161,#179));
+        						</code></pre>
+            </section>
+
+            <section>
+                <img style="height: 100vh" src="static/images/ifcbuildingelement.PNG">
+            </section>
+
+
+        </section>
+
+        <section>
+
+            <section>
+
+                <h2>🌍 Placements</h2>
+
+                <p class="block">La ubicación en el espacio de todas las representaciones de un objeto. Casi siempre se
+                    usa <b>IfcLocalPlacement</b>.</p>
+
+            </section>
+
+            <section>
+                <img src="static/images/object_placement.JPG">
+            </section>
+
+            <section>
+
+                <h2>✍ IfcAxis2Placement</h2>
+
+                <p class="block">Representa el sistema de coordenadas de un objeto. Puede ser 2d <b>Axis2Placement2D</b>
+                    o 3D <b>Axis2Placement3D</b>.</p>
+
+            </section>
+
+            <section>
+
+                <h2>🌍 ¿Qué es un sistema de coordenadas?</h2>
+
+                <p class="block"><b>Location</b>: La ubicación del objeto.</p>
+                <p class="block"><b>Axis</b>: Eje Z. Por defecto: (0,0,1).</p>
+                <p class="block"><b>RefDirection</b>: Eje X. Por defecto: (1,0,0).</p>
+
+            </section>
+
+            <section>
+
+                <h2>🌍 ¿Local o global?</h2>
+
+                <p class="block">Global vs local: Si <b>PlacementRelTo</b> está definido, es local. Si no, es global
+                    según lo determinado por el <b>IfcGeometricRepresentationContext</b>.</p>
+
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcgeometricconstraintresource/lexical/ifclocalplacement.htm"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <h2>Ejemplo</h2>
+                <img src="static/images/relative_placement_example.JPG">
+            </section>
+
+            <section>
+
+                <h2>Ejemplo</h2>
+                <pre><code class="hljs c" data-line-numbers="|1-4|6-9|11-13|15-17|19-20">/* Sistemas de coordenadas globales */
+#1=IFCGEOMETRICREPRESENTATIONCONTEXT($, '3Dmodel', 3, 1.0E-005, #2, $);
+#2=IFCAXIS2PLACEMENT3D(#3, $, $);
+#3=IFCCARTESIANPOINT((0.0, 0.0, 0.0));
+
+/* Sistemas de coordenadas locales */
+#4=IFCLOCALPLACEMENT($, #7);
+#7=IFCAXIS2PLACEMENT3D(#10, $, $);
+#10=IFCCARTESIANPOINT((0.0, 0.0, 2.0));
+
+#5=IFCLOCALPLACEMENT(#4, #8);
+#8=IFCAXIS2PLACEMENT3D(#11, $, $);
+#11=IFCCARTESIANPOINT((1.0, 0.0, 0.0));
+
+#6=IFCLOCALPLACEMENT(#4, #9);
+#9=IFCAXIS2PLACEMENT3D(#12, #13, #14);
+#12=IFCCARTESIANPOINT((0.0, 2.0, 2.0.));
+
+#13=IFCDIRECTION((0.0, 1.0, 0.0.));
+#14=IFCDIRECTION((0.0, 0.0, -1.0));
+
+        						</code></pre>
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>☝ Reglas</h2>
+
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>☝ Reglas</h2>
+
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>☝ Reglas</h2>
+
+                <p class="block">🔁 Prohibidas las referencias circulares.</p>
+
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>☝ Reglas</h2>
+
+                <p class="block">🔁 Prohibidas las referencias circulares.</p>
+                <p class="block">🌍 El <b>IfcSite</b> es global.</p>
+
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>☝ Reglas</h2>
+
+                <p class="block">🔁 Prohibidas las referencias circulares.</p>
+                <p class="block">🌍 El <b>IfcSite</b> es global.</p>
+                <p class="block">🌍 El <b>IfcBuilding</b> debe referenciarse al <b>IfcSite</b>.</p>
+
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>☝ Reglas</h2>
+
+                <p class="block">🔁 Prohibidas las referencias circulares.</p>
+                <p class="block">🌍 El <b>IfcSite</b> es global.</p>
+                <p class="block">🌍 El <b>IfcBuilding</b> debe referenciarse al <b>IfcSite</b>.</p>
+
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>☝ Reglas</h2>
+
+                <p class="block">🔁 Prohibidas las referencias circulares.</p>
+                <p class="block">🌍 El <b>IfcSite</b> es global.</p>
+                <p class="block">🌍 El <b>IfcBuilding</b> debe referenciarse al <b>IfcSite</b>.</p>
+                <p class="block">🌍 Los <b>IfcBuildingStorey</b> deben referenciarse al <b>IfcBuilding</b>.</p>
+
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>☝ Reglas</h2>
+
+                <p class="block">🌍 Los <b>IfcBuildingElements</b> deben referenciarse a la estructura espacial donde
+                    estén contenidos (generalmente <b>IfcBuildingStorey</b>) o al elemento del que dependen (ej. un
+                    hueco está referenciado al muro).</p>
+
+            </section>
+
+            <section>
+
+                <h2>🔲 IfcGridPlacement</h2>
+
+                <p class="block">Permite la localización de un objeto de forma relativa a la intersección de dos grid
+                    lines (IfcGridAxis) en la misma grid (<b>IfcGrid</b>) a través del objeto <b>IfcVirtualGridIntersection</b>.
+                </p>
+
+            </section>
+
+            <section>
+                <img style="height: 100vh" src="static/images/grid_placement.JPG">
+            </section>
+
+            <section>
+                <img style="height: 100vh" src="static/images/grid_placement_example.JPG">
+            </section>
+
+        </section>
+
+        <section>
+
+            <section data-auto-animate>
+
+                <h2>🃏🤡 Representaciones</h2>
+
+                <p class="block">Un objeto puede tener múltiples representaciones.</p>
+
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>🃏🤡 Representaciones</h2>
+
+                <p class="block">Un objeto puede tener múltiples representaciones.</p>
+                <p style="color: red" class="block">Una puerta es un arco bidimensional, pero también es un modelo
+                    3d.</p>
+
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>🃏🤡 IfcProductDefinitionShape</h2>
+
+                <p class="block">Contenedor de todas las representations (<b>IfcShapeRepresentation</b>) de un <b>IfcProduct</b>,
+                    asignadas a un <b>representation context</b>.
+                </p>
+
+            </section>
+
+            <section>
+                <img src="static/images/ifcproductdefinitionshape.JPG">
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcrepresentationresource/lexical/ifcproductdefinitionshape.htm"
+                    data-background-interactive>
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>🃏 IfcShapeRepresentation</h2>
+
+                <p class="block">Una representación individual de un objeto.</p>
+
+            </section>
+
+            <section data-auto-animate>
+
+                <h2>🃏 IfcShapeRepresentation</h2>
+
+                <p class="block"><b>ContextOfItems</b>: el contexto al que pertenece.</p>
+                <p class="block"><b>RepresentationIdentifier</b>: información arbitraria.</p>
+                <p class="block"><b>RepresentationType</b>: información arbitraria.</p>
+                <p class="block"><b>Items</b>: cada objeto geométrico de esta representación.</p>
+
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcrepresentationresource/lexical/ifcshaperepresentation.htm"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <h2>Ejemplo: un muro</h2>
+                <img style="height: 25rem" src="static/images/wall_representation_example.JPG">
+            </section>
+
+            <section>
+
+                <h2>Ejemplo</h2>
+                <pre><code class="hljs c" data-line-numbers="|1|3-6|8-11|13-14|16-24|26-37">#1=IFCWALLSTANDARDCASE('abcdefghijklmnopqrst01', #2, $, $, $, #3, #4, $);
+
+/* Ubicación local */
+#3=IFCLOCALPLACEMENT($, #10);
+#10=IFCAXIS2PLACEMENT3D(#16, $, $);
+#16=IFCCARTESIANPOINT((2.000000E+00, 1.000000E+00, 0.000000E+00));
+
+/* Contexto de representación */
+#12=IFCGEOMETRICREPRESENTATIONCONTEXT($, $, 3, $, #14, $);
+#14=IFCAXIS2PLACEMENT3D(#15, $, $);
+#15=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 0.000000E+00));
+
+/* Múltiples representaciones */
+#4=IFCPRODUCTDEFINITIONSHAPE($, $, (#11, #13));
+
+/* Primera representación: eje */
+#11=IFCSHAPEREPRESENTATION(#12, 'Axis', 'Curve2D', (#18));
+#18=IFCTRIMMEDCURVE(#19,(#20),(#21),.T.,.CARTESIAN.);
+#19=IFCLINE(#30, #31);
+#30=IFCCARTESIANPOINT((0.0E+00, 0.0E+00));
+#31=IFCVECTOR(#32,2.8E+00);
+#32=IFCDIRECTION((1.0E+00, 0.0E+00));
+#20=IFCCARTESIANPOINT((0.0E+00, 0.0E+00));
+#21=IFCCARTESIANPOINT((2.80E+00, 0.0E+00));
+
+/* Segunda representación: volumen */
+#13=IFCSHAPEREPRESENTATION(#12, 'Body', 'SweptSolid', (#22));
+#22=IFCEXTRUDEDAREASOLID(#23, #26, #29, 2.80E+00);
+#26=IFCAXIS2PLACEMENT3D(#28, $, $);
+#28=IFCCARTESIANPOINT((0.0E+00, 0.0E+00, 0.0E+00));
+#29=IFCDIRECTION((0.0E+00, 0.0E+00, 1.0E+00));
+#23=IFCARBITRARYCLOSEDPROFILEDEF(.AREA., $, #40);
+#40=IFCPOLYLINE((#41,#42,#43,#44,#41));
+#41=IFCCARTESIANPOINT((0.0E+00, 1.0E-01));
+#42=IFCCARTESIANPOINT((2.8E+00, 1.0E-01));
+#43=IFCCARTESIANPOINT((2.8E+00, -1.0E-01));
+#44=IFCCARTESIANPOINT((0.0E+00, -1.0E-01));
+        						</code></pre>
+            </section>
+
+        </section>
+
+
+        <section>
+
+            <section>
+                <h2 class="block">🧊 Tipos de representación</h2>
+                <p>Qué geometría puede haber dentro de un IFC.</p>
+            </section>
+
+            <section>
+                <h2>🧊 Tipos de representación</h2>
+                <img style="height: 35rem" src="static/images/representation_types.JPG">
+            </section>
+
+            <section data-auto-animate>
+                <h2>🧊 Tipos de representación</h2>
+                <p>El atributo <b>items</b> de <b>IfcShapeRepresentation</b>.</p>
+            </section>
+
+            <section data-auto-animate>
+                <h2>🧊 Tipos de representación</h2>
+                <p>Representación geométrica.</p>
+                <p>Representación mapeada.</p>
+                <p>Representación topológica.</p>
+            </section>
+
+            <section>
+                <h2>🎗 Curve 2D</h2>
+                <p>Representación basada en el uso de curvas bidimensionales. Generalmente se utiliza para representar
+                    “paths” (ej. wall path). Se usan <b>IfcBoundedCurve</b>, <b>IfcLine</b> e <b>IfcPolyline</b>.</p>
+            </section>
+
+            <section>
+
+                <h2>Ejemplo</h2>
+                <pre><code class="hljs c" data-line-numbers="|1|3-6|8-11|13-14|16-24">#1=IFCWALLSTANDARDCASE('abcdefghijklmnopqrst01', #2, $, $, $, #3, #4, $);
+
+/* Ubicación local */
+#3=IFCLOCALPLACEMENT($, #10);
+#10=IFCAXIS2PLACEMENT3D(#16, $, $);
+#16=IFCCARTESIANPOINT((2.000000E+00, 1.000000E+00, 0.000000E+00));
+
+/* Contexto de representación */
+#12=IFCGEOMETRICREPRESENTATIONCONTEXT($, $, 3, $, #14, $);
+#14=IFCAXIS2PLACEMENT3D(#15, $, $);
+#15=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 0.000000E+00));
+
+/* Múltiples representaciones */
+#4=IFCPRODUCTDEFINITIONSHAPE($, $, (#11, #13));
+
+/* Primera representación: eje */
+#11=IFCSHAPEREPRESENTATION(#12, 'Axis', 'Curve2D', (#18));
+#18=IFCTRIMMEDCURVE(#19,(#20),(#21),.T.,.CARTESIAN.);
+#19=IFCLINE(#30, #31);
+#30=IFCCARTESIANPOINT((0.0E+00, 0.0E+00));
+#31=IFCVECTOR(#32,2.8E+00);
+#32=IFCDIRECTION((1.0E+00, 0.0E+00));
+#20=IFCCARTESIANPOINT((0.0E+00, 0.0E+00));
+#21=IFCCARTESIANPOINT((2.80E+00, 0.0E+00));
+
+        						</code></pre>
+            </section>
+
+            <section data-auto-animate>
+                <h2>👓🕶🥽 Geometric set</h2>
+                <p>Reprentación basada en el uso de puntos, curvas, superficies 2D y 3D, incluyendo superficies
+                    extruídas y revolucionadas (swept surfaces), sin usar información topológica.</p>
+            </section>
+
+            <section data-auto-animate>
+                <h2>👓🕶🥽 Geometric set</h2>
+                <p>Los elementos deberán ser 2D o 3D, pero no una mezcla. Se suele utilizar para crear representaciones
+                    bidimensionales de mobiliarios, instalaciones, etc, o para representar el footprint de
+                    <b>IfcSpaces</b>. </p>
+            </section>
+
+            <section data-auto-animate>
+                <h2>👓🕶🥽 Geometric set</h2>
+                <p>El único elemento del atributo Items de IfcShapeRepresentation será del tipo IfcGeometricSet, en cuyo
+                    atributo Elements contendrá uno o varios subtipos de <b>IfcPoint</b>, <b>IfcCurve</b> y <b>IfcSurface</b>.
+                </p>
+            </section>
+
+            <section>
+                <img style="height: 35rem" src="static/images/geometric_set.JPG">
+            </section>
+
+            <section>
+                <img style="height: 35rem" src="static/images/ifcsurface.JPG">
+            </section>
+
+            <section>
+                <h2>Ejemplo: conducto</h2>
+                <img style="height: 35rem" src="static/images/duct.JPG">
+            </section>
+
+            <section>
+                <h2>Ejemplo: conducto</h2>
+                <pre><code class="hljs c" data-line-numbers="|1-2|4-7|9-12|14-20|22-32">#1=IFCFLOWSEGMENT('abcdefghijklmnopqrst12', #2, $, $, $, #3, #4, $, .FLUIDFLOW.,.DUCTSEGMENT.);
+#2=IFCOWNERHISTORY(#6, #7, .READWRITE., .NOCHANGE., $, $, $, 978921854);
+
+/* Ubicación absoluta */
+#3=IFCLOCALPLACEMENT($, #10);
+#10=IFCAXIS2PLACEMENT3D(#16, $, $);
+#16=IFCCARTESIANPOINT((2.000000E+00, 1.000000E+00, 0.000000E+00));
+
+/* Contexto de representación */
+#12=IFCGEOMETRICREPRESENTATIONCONTEXT($, $, 3, $, #14, $);
+#14=IFCAXIS2PLACEMENT3D(#15, $, $);
+#15=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 0.000000E+00));
+
+/* Geometric set del conducto */
+#4=IFCPRODUCTDEFINITIONSHAPE($, $, (#11));
+#11=IFCSHAPEREPRESENTATION(#12, '', 'GeometricSet', (#13));
+#12=IFCGEOMETRICREPRESENTATIONCONTEXT($, $, 3, $, #14, $);
+#14=IFCAXIS2PLACEMENT3D(#15, $, $);
+#15=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 0.000000E+00));
+#16=IFCCARTESIANPOINT((2.000000E+00, 1.000000E+00, 0.000000E+00));
+
+/* Geometría de extrusión */
+#13=IFCGEOMETRICSET((#17));
+#17=IFCSURFACEOFLINEAREXTRUSION(#18, #21, #25, 2.000000E+00);
+#18=IFCCIRCLEPROFILEDEF(.CURVE., $, #19, 1.000000E+00);
+#19=IFCAXIS2PLACEMENT2D(#20, $);
+#20=IFCCARTESIANPOINT((1.000000E+00, 0.000000E+00));
+#21=IFCAXIS2PLACEMENT3D(#22, #23, #24);
+#22=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 0.000000E+00));
+#23=IFCDIRECTION((0.000000E+00, 1.000000E+00, 0.000000E+00));
+#24=IFCDIRECTION((0.000000E+00, 0.000000E+00, 1.000000E+00));
+#25=IFCDIRECTION((0.000000E+00, 0.000000E+00, 1.000000E+00));
+        						</code></pre>
+            </section>
+
+            <section>
+                <h2>GeometricCurveSet </h2>
+                <p>Subtipo de geometric set, pero solo permite puntos y curvas 2D y 3D. El uso más común es la
+                    representación de símbolos de elementos de planta (como sillas, mesas, etc).</p>
+            </section>
+
+            <section>
+                <h2>Ejemplo: silla en planta</h2>
+                <img style="height: 35rem" src="static/images/chair_2d_representation.JPG">
+            </section>
+
+            <section>
+                <h2>Ejemplo: conducto</h2>
+                <pre><code class="hljs c" data-line-numbers="|1-2|4-7|9-12|14-17|19-26">#1=IFCFURNITUREELEMENT('abcdefghijklmnopqrst02', #2, $, $, $, #3, #4, $);
+#2=IFCOWNERHISTORY(#6, #7, .READWRITE., .NOCHANGE., $, $, $, 978921854);
+
+/* Ubicación */
+#3=IFCLOCALPLACEMENT($, #10);
+#10=IFCAXIS2PLACEMENT3D(#16, $, $);
+#16=IFCCARTESIANPOINT((2.000000E+00, 1.000000E+00, 0.000000E+00));
+
+/* Contexto de representación */
+#12=IFCGEOMETRICREPRESENTATIONCONTEXT($, $, 3, $, #14, $);
+#14=IFCAXIS2PLACEMENT3D(#15, $, $);
+#15=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 0.000000E+00));
+
+/* Geometric set */
+#4=IFCPRODUCTDEFINITIONSHAPE($, $, (#11));
+#11=IFCSHAPEREPRESENTATION(#12, '', 'GeometricCurveSet', (#18));
+#18=IFCGEOMETRICCURVESET((#19, #24));
+
+#19=IFCPOLYLINE((#20, #21, #22, #23, #20));
+#20=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 0.000000E+00));
+#21=IFCCARTESIANPOINT((0.700000E+00, 0.000000E+00, 0.000000E+00));
+#22=IFCCARTESIANPOINT((0.700000E+00, 0.600000E+00, 0.000000E+00));
+#23=IFCCARTESIANPOINT((0.000000E+00, 0.600000E+00, 0.000000E+00));
+#24=IFCPOLYLINE((#25, #26));
+#25=IFCCARTESIANPOINT((0.100000E+00, 0.000000E+00, 0.000000E+00));
+#26=IFCCARTESIANPOINT((0.100000E+00, 0.600000E+00, 0.000000E+00));
+        						</code></pre>
+            </section>
+
+            <section data-auto-animate>
+                <h2>⚽ Surface model</h2>
+                <p>Representación basada en el uso de modelos basados en una colección de caras delimitadas.</p>
+            </section>
+
+            <section data-auto-animate>
+                <h2>⚽ Surface model</h2>
+                <p>No tiene inteligencia paramétrica, y ocupa más espacio. Sin información de volumen.</p>
+            </section>
+
+            <section>
+                <img style="height: 35rem" src="static/images/surface_model.JPG">
+            </section>
+
+            <section>
+                <h2>Ejemplo</h2>
+                <img style="height: 35rem" src="static/images/surface_model_example.JPG">
+            </section>
+
+            <section>
+                <h2>Ejemplo: conducto</h2>
+                <pre><code class="hljs c" data-line-numbers="|1-2|4-7|9-12|14-46">#1=IFCFLOWSEGMENT('abcdefghijklmnopqrst02', #2, $, $, $, #3, #4, $);
+#2=IFCOWNERHISTORY(#6, #7, .READWRITE., .NOCHANGE., $, $, $, 978921854);
+
+/* Ubicación */
+#3=IFCLOCALPLACEMENT($, #10);
+#10=IFCAXIS2PLACEMENT3D(#16, $, $);
+#16=IFCCARTESIANPOINT((2.000000E+00, 1.000000E+00, 0.000000E+00));
+
+/* Contexto de representación */
+#12=IFCGEOMETRICREPRESENTATIONCONTEXT($, $, 3, $, #14, $);
+#14=IFCAXIS2PLACEMENT3D(#15, $, $);
+#15=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 0.000000E+00));
+
+/* Representación de superficie */
+#4=IFCPRODUCTDEFINITIONSHAPE($, $, (#11));
+#11=IFCSHAPEREPRESENTATION(#12, '', 'SurfaceModel', (#18));
+#18=IFCFACEBASEDSURFACEMODEL((#19));
+#19=IFCCONNECTEDFACESET((#23, #21, #22, #20));
+#20=IFCFACE((#24));
+#21=IFCFACE((#25));
+#22=IFCFACE((#26));
+#23=IFCFACE((#27));
+#24=IFCFACEOUTERBOUND(#28, .T.);
+#25=IFCFACEOUTERBOUND(#29, .T.);
+#26=IFCFACEOUTERBOUND(#30, .T.);
+#27=IFCFACEOUTERBOUND(#31, .T.);
+#28=IFCPOLYLOOP((#40, #41, #42, #43));
+#29=IFCPOLYLOOP((#50, #51, #52, #53));
+#30=IFCPOLYLOOP((#60, #61, #62, #63));
+#31=IFCPOLYLOOP((#70, #71, #72, #73));
+#40=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 0.000000E+00));
+#41=IFCCARTESIANPOINT((1.200000E+00, 0.000000E+00, 0.000000E+00));
+#42=IFCCARTESIANPOINT((1.200000E+00, 0.000000E+00, 6.000000E-01));
+#43=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 6.000000E-01));
+#50=IFCCARTESIANPOINT((0.000000E+00, 6.000000E-01, 0.000000E+00));
+#51=IFCCARTESIANPOINT((0.000000E+00, 6.000000E-01, 6.000000E-01));
+#52=IFCCARTESIANPOINT((1.200000E+00, 6.000000E-01, 6.000000E-01));
+#53=IFCCARTESIANPOINT((0.000000E+00, 6.000000E-01, 0.000000E+00));
+#60=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 6.000000E-01));
+#61=IFCCARTESIANPOINT((1.200000E+00, 0.000000E+00, 6.000000E-01));
+#62=IFCCARTESIANPOINT((1.200000E+00, 6.000000E-01, 6.000000E-01));
+#63=IFCCARTESIANPOINT((0.000000E+00, 6.000000E-01, 6.000000E-01));
+#70=IFCCARTESIANPOINT((0.000000E+00, 0.000000E+00, 0.000000E+00));
+#71=IFCCARTESIANPOINT((0.000000E+00, 6.000000E-01, 0.000000E+00));
+#72=IFCCARTESIANPOINT((1.200000E+00, 6.000000E-01, 0.000000E+00));
+#73=IFCCARTESIANPOINT((1.200000E+00, 6.000000E-01, 6.000000E-01));
+        						</code></pre>
+            </section>
+
+            <section data-auto-animate>
+                <h2>🥌 Solid model</h2>
+                <p>Representación basada en el uso de sólidos (incluyendo swept solids), resultados booleanos y
+                    geometrías Brep. Es la representación más completa de la geometría de un producto.</p>
+            </section>
+
+            <section data-auto-animate>
+                <h2>🥌 Solid model</h2>
+                <p><b>Boundary model</b>: sólidos basados en caras.</p>
+                <p><b>Swept area solid</b>: sólidos basados en extrusión o revolución.</p>
+                <p><b>CSG</b>: sólidos basado por un conjunto de sólidos y un conjunto de operaciones booleanas. </p>
+            </section>
+
+            <section>
+                <img style="height: 35rem" src="static/images/solid_model.JPG">
+            </section>
+
+            <section data-auto-animate>
+                <h2>🗼 Breps</h2>
+                <p> Esta representación está basada en una colección de caras delimitadas por poly loops, con
+                    información topológica disponible y donde el volumen está definido.</p>
+            </section>
+
+            <section data-auto-animate>
+                <h2>🗼 Breps</h2>
+                <p>Esta geometría es capaz de representar casi cualquier forma de cualquier elemento presente en un
+                    proyecto AEC.</p>
+            </section>
+
+            <section>
+                <img style="height: 35rem" src="static/images/brep_example.JPG">
+            </section>
+
+            <section>
+                <pre><code class="hljs c" data-line-numbers="|1-2|4-7|9-12|14-59">#1=IFCBUILDINGELEMENTPROXY('abcdefghijklmnopqrst02', #2, 'Box', $, $, #3, #4, $,$);
+#2=IFCOWNERHISTORY(#6, #7, .READWRITE., .NOCHANGE., $, $, $, 978921854);
+
+/* Ubicación */
+#3=IFCLOCALPLACEMENT($, #10);
+#10=IFCAXIS2PLACEMENT3D(#16, $, $);
+#16=IFCCARTESIANPOINT((2.0, 1.0, 0.0));
+
+/* Contexto de reprentación */
+#12=IFCGEOMETRICREPRESENTATIONCONTEXT($, $, 3, 1.0E-06, #14, $);
+#14=IFCAXIS2PLACEMENT3D(#15, $, $);
+#15=IFCCARTESIANPOINT((0.0, 0.0, 0.0));
+
+/* Representación b-rep */
+#4=IFCPRODUCTDEFINITIONSHAPE($, $, (#11));
+#11=IFCSHAPEREPRESENTATION(#12, '', 'Brep', (#174));
+#174=IFCFACETEDBREP(#173);
+#173=IFCCLOSEDSHELL((#148,#151,#154,#157,#160,#163,#166,#169,#172));
+#132=IFCCARTESIANPOINT((0.25,0.25,1.5));
+#133=IFCCARTESIANPOINT((1.,0.25,1.5));
+#134=IFCCARTESIANPOINT((1.,1.,1.5));
+#135=IFCCARTESIANPOINT((0.25,1.,1.5));
+#136=IFCCARTESIANPOINT((0.25,0.25,2.5));
+#137=IFCCARTESIANPOINT((1.,0.25,2.5));
+#138=IFCCARTESIANPOINT((0.25,1.,2.5));
+#139=IFCCARTESIANPOINT((-1.,-1.,0.));
+#140=IFCCARTESIANPOINT((1.,-1.,0.));
+#141=IFCCARTESIANPOINT((1.,1.,0.));
+#142=IFCCARTESIANPOINT((-1.,1.,0.));
+#143=IFCCARTESIANPOINT((-1.,-1.,2.5));
+#144=IFCCARTESIANPOINT((1.,-1.,2.5));
+#145=IFCCARTESIANPOINT((-1.,1.,2.5));
+#146=IFCPOLYLOOP((#138,#136,#132,#135));
+#147=IFCFACEOUTERBOUND(#146,.T.);
+#148=IFCFACE((#147));
+#149=IFCPOLYLOOP((#136,#137,#133,#132));
+#150=IFCFACEOUTERBOUND(#149,.T.);
+#151=IFCFACE((#150));
+#152=IFCPOLYLOOP((#132,#133,#134,#135));
+#153=IFCFACEOUTERBOUND(#152,.T.);
+#154=IFCFACE((#153));
+#155=IFCPOLYLOOP((#137,#136,#138,#145,#143,#144));
+#156=IFCFACEOUTERBOUND(#155,.T.);
+#157=IFCFACE((#156));
+#158=IFCPOLYLOOP((#138,#135,#134,#141,#142,#145));
+#159=IFCFACEOUTERBOUND(#158,.T.);
+#160=IFCFACE((#159));
+#161=IFCPOLYLOOP((#133,#137,#144,#140,#141,#134));
+#162=IFCFACEOUTERBOUND(#161,.T.);
+#163=IFCFACE((#162));
+#164=IFCPOLYLOOP((#143,#145,#142,#139));
+#165=IFCFACEOUTERBOUND(#164,.T.);
+#166=IFCFACE((#165));
+#167=IFCPOLYLOOP((#144,#143,#139,#140));
+#168=IFCFACEOUTERBOUND(#167,.T.);
+#169=IFCFACE((#168));
+#170=IFCPOLYLOOP((#140,#139,#142,#141));
+#171=IFCFACEOUTERBOUND(#170,.T.);
+#172=IFCFACE((#171));
+        						</code></pre>
+            </section>
+
+            <section data-auto-animate>
+                <h2>🧹 SweptSolid</h2>
+                <p>Extrusiones y revoluciones. Una de las geometrías más comunes.</p>
+            </section>
+
+            <section>
+                <img style="height: 35rem" src="static/images/wall_representation_example.JPG">
+            </section>
+
+            <section data-auto-animate>
+                <h2>💀 CSG</h2>
+                <p>Operaciones booleanas.</p>
+            </section>
+
+            <section>
+                <img style="height: 35rem" src="static/images/wall_clipping.PNG">
+            </section>
+
+            <section data-auto-animate>
+                <h2>🪑🪑🪑 Mapped representation</h2>
+                <p>Elementos instanciados (ahorran mucha memoria).</p>
+            </section>
+
+            <section>
+                <img style="height: 35rem" src="static/images/mapped_items.JPG">
+            </section>
+
+        </section>
+
+        <section>
+            <section data-auto-animate>
+                <h2 class="block">📚 Propiedades</h2>
+                <p>Toda la información no geométrica de un modelo BIM.</p>
+            </section>
+
+            <section data-auto-animate>
+                <h2 class="block">📚 Propiedades</h2>
+                <p>Toda la información no geométrica de un modelo BIM.</p>
+                <p style="color: red">Propiedades nativas vs inversas</p>
+            </section>
+
+            <section data-auto-animate>
+                <h2>Propiedades inversas</h2>
+                <p class="block">📗 Propiedades genéricas.</p>
+                <p class="block">📘 Propiedades de material.</p>
+                <p class="block">📙 Propiedades de medición.</p>
+                <p class="block">📒 Propiedades de tipo.</p>
+            </section>
+        </section>
+
+        <section>
+
+            <section data-auto-animate>
+                <h2 class="block">📗 Propiedades genéricas</h2>
+                <p class="block">Tipo: <b>IfcPropertySet</b></p>
+                <p class="block">Relación: <b>IfcRelDefinesByProperties</b></p>
+            </section>
+
+            <section data-auto-animate>
+                <h2 class="block">📗 Propiedades genéricas</h2>
+                <p class="block">Tipo: <b>IfcPropertySet</b></p>
+                <p class="block">Relación: <b>IfcRelDefinesByProperties</b></p>
+            </section>
+
+            <section>
+                <img src="static/images/ifcpropertyset_definition.JPG">
+            </section>
+
+            <section>
+                <img style="height: 35rem" src="static/images/property_set.JPG">
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifckernel/lexical/ifcpropertyset.htm"
+                    data-background-interactive>
+            </section>
+
+            <section data-auto-animate>
+                <p class="block">Varios objetos suelen compartir las mismas propiedades (ahorra memoria)</p>
+                <p class="block">También existe la posibilidad de sobrescribir propiedades con <b>IfcRelOverridesProperties</b></p>
+            </section>
+
+            <section>
+                <img src="static/images/ifcreloverridesbyproperty.JPG">
+            </section>
+
+            <section>
+                <img src="static/images/ifcreloverridesbyproperty_example.JPG">
+            </section>
+
+            <section>
+                <h2>Propiedades genéricas</h2>
+                <img style="height: 30rem" src="static/images/property_set_types.JPG">
+            </section>
+
+            <section>
+                <h2>IfcPropertySingleValue</h2>
+                <p>La más común y sencilla. Tiene un valor y una unidad.</p>
+            </section>
+
+            <section>
+                <img src="static/images/propertysinglevalue.JPG">
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcpropertyresource/lexical/ifcpropertysinglevalue.htm"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <h3>IfcPropertyEnumeratedValue</h3>
+                <p>Permite definir una propiedad cuyos valores posibles están limitados a una lista predefinida de valores (enum).</p>
+            </section>
+
+            <section>
+                <img src="static/images/ifcenumerationvalue.JPG">
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcpropertyresource/lexical/ifcpropertyenumeratedvalue.htm"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <h3>IfcPropertyBoundedValue</h3>
+                <p>Representa propiedades cuyo valor está limitado por un valor máximo <b>UpperBoundValue</b> y un valor mínimo <b>LowerBoundValue</b>.</p>
+            </section>
+
+            <section>
+                <img src="static/images/propertyboundedvalue.JPG">
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x2/FINAL/HTML/ifcpropertyresource/lexical/ifcpropertyboundedvalue.html"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <h3>IfcPropertyListValue </h3>
+                <p>Representa propiedades definidas por una lista de valores. Al igual que con el enum, todos los elementos de la lista deberán ser del mismo tipo (y por tanto tener las mismas unidades).</p>
+            </section>
+
+            <section>
+                <img src="static/images/propertylistvalue.JPG">
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcpropertyresource/lexical/ifcpropertylistvalue.htm"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <h3>IfcPropertyTableValue  </h3>
+                <p>Permite la definición propiedades cuyos valores se definen en forma de tabla de dos filas, donde el valor final de la propiedad depende de otro valor.</p>
+            </section>
+
+            <section>
+                <img src="static/images/propertytablevalue.JPG">
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/schema/ifcpropertyresource/lexical/ifcpropertytablevalue.htm"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <h3>IfcPropertyReferenceValue   </h3>
+                <p>Permite usar la referencia a un objeto como propiedad.</p>
+            </section>
+
+            <section>
+                <h3>IfcComplexProperty  </h3>
+                <p>Permite crear grupos de propiedades (tanto <b>IfcSimpleProperty</b> como <b>IfcComplexProperty</b>)</p>
+            </section>
+
+            <section>
+                <img src="static/images/complexproperty.JPG">
+            </section>
+
+        </section>
+
+        <section>
+
+            <section>
+                <p class="block">📘 Propiedades de material.</p>
+                <p class="">relación: <b>IfcRelAssociatesMaterial</b></p>
+            </section>
+
+            <section>
+                <p>🪑🚪 Todos los building elements pueden tener un material asociado (menos los <b>IfcOpeningElements</b>. El mismo material se puede asociar a múltiples objetos.</p>
+            </section>
+
+            <section>
+                <img src="static/images/material_definition.JPG">
+            </section>
+
+            <section>
+                <h2>Ifcmaterial: un solo material</h2>
+                <pre><code class="hljs c" data-line-numbers="|1|2|3|4|5">#11=IFCCOLUMN('abcdefghijklmnopqrst11',#21,$,$,$,$,$,$);
+#12=IFCCOLUMN('abcdefghijklmnopqrst12',#22,$,$,$,$,$,$);
+#13=IFCCOLUMN('abcdefghijklmnopqrst13',#23,$,$,$,$,$,$);
+#3=IFCRELASSOCIATESMATERIAL('abcdefghijklmnopqrst02',#24,$,$,(#11,#12,#13),#4);
+#4=IFCMATERIAL('Concrete');
+        						</code></pre>
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/schema/ifcmaterialresource/lexical/ifcmaterial.htm"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <h2>IfcMaterialList: múltiples materiales</h2>
+                <pre><code class="hljs c" data-line-numbers="|1|2|3|4|5|6">#1=IFCWALL('abcdefghijklmnopqrst01',#21,$,$,$,$,$,$);
+#3=IFCRELASSOCIATESMATERIAL('abcdefghijklmnopqrst02',#22,$,$,(#1),#4);
+#4=IFCMATERIALLIST(#5,#6,#7);
+#5=IFCMATERIAL('Concrete');
+#6=IFCMATERIAL('Brick');
+#7=IFCMATERIAL('Mineral wool');
+        						</code></pre>
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC2/HTML/schema/ifcmaterialresource/lexical/ifcmateriallist.htm"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <h2>IfcMaterialLayerSetUsage</h2>
+                <p>Cuando hay capas definidas de materiales en un elemento.</p>
+            </section>
+
+            <section>
+                <img src="static/images/materiallayersetusage.JPG">
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/schema/ifcmaterialresource/lexical/ifcmateriallayersetusage.htm"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <img src="static/images/materiallayersetusage_example.JPG">
+            </section>
+
+            <section>
+                <h2>IfcMaterialList: múltiples materiales</h2>
+                <pre><code class="hljs c" data-line-numbers="|1|2|3|4|5|6|7|8|9|10">#1=IFCWALL('abcdefghijklmnopqrst01',#21,$,$,$,$,$,$);
+#3=IFCRELASSOCIATESMATERIAL('abcdefghijklmnopqrst02',#22,$,$,(#1),#4);
+#4=IFCMATERIALLAYERSETUSAGE(#5,.AXIS2.,.POSITIVE.,-150.);
+#5=IFCMATERIALLAYERSET((#6,#7,#8),'Layered wall type 1');
+#6=IFCMATERIALLAYER(#9,100.,$);
+#7=IFCMATERIALLAYER(#10,120.,$);
+#8=IFCMATERIALLAYER(#11,80.,$);
+#9=IFCMATERIAL('Concrete');
+#10=IFCMATERIAL('Mineral wool');
+#11=IFCMATERIAL('Brick');
+        						</code></pre>
+            </section>
+
+        </section>
+
+        <section>
+
+            <section>
+                <p class="block">📙 Propiedades de medición.</p>
+            </section>
+
+            <section>
+                <p class="block">Se pueden asignar cantidades a objetos mediante la clase <b>IfcElementQuantity</b>. Cada instancia de IfcElementQuantity puede contener una o más instancias de <b>IfcPhysicalQuantity</b>; es decir, todas las cantidades relativas a un objeto pueden estar contenidas en una única instancia de <b>IfcElementQuantity</b>.</p>
+            </section>
+
+            <section>
+                <p class="block">Además, cada instancia de IfcElementQuantity tiene un atributo definido MethodOfMeasurement, que es un texto especificando las reglas de medición empleadas (generalmente es una referencia a un estándar nacional o internacional, como por ej. la norma DIN).</p>
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/TC1/HTML/ifcproductextension/lexical/ifcelementquantity.htm"
+                    data-background-interactive>
+            </section>
+
+            <section>
+                <img src="static/images/elementquantity_definition.JPG">
+            </section>
+
+            <section>
+                <img src="static/images/elementquantity_example.JPG">
+            </section>
+
+            <section>
+                <h2>IfcMaterialList: múltiples materiales</h2>
+                <pre><code class="hljs c" data-line-numbers="|1-8|10-13|15-16|18-19|21-22|24-26">/* Definiciones generales */
+#100=IFCOWNERHISTORY(#106, #107, .READWRITE., .NOCHANGE., $, $, $, 978921854);
+#101=IFCOWNERHISTORY(#106, #107, .READWRITE., .NOCHANGE., $, $, $, 978921854);
+#102=IFCOWNERHISTORY(#106, #107, .READWRITE., .NOCHANGE., $, $, $, 978921854);
+#106=IFCPERSONANDORGANIZATION(#108, #109, $);
+#107=IFCAPPLICATION(#109, '1', 'IFC2x Text Program', 'IFC2x Test');
+#108=IFCPERSON($, 'Miller', 'Frank', $, $, $, $, $);
+#109=IFCORGANIZATION($, 'IAI', 'International Alliance for Interoperability', $, $);
+
+/* Definición de un elemento de medición */
+/* No se especifica unidades, así que son unidades globales */
+#400=IFCQUANTITYWEIGHT ('Generator Weight','Includes for fuel provision',$,500.0);
+#600=IFCELEMENTQUANTITY ('gabcdeghijklmnopqrst97',#101,$,$,'UMM3',(#400));
+
+/* Asignación de cantidades a instancias */
+#700=IFCRELDEFINESBYPROPERTIES ('gabcdeghijklmnopqrst700',#102,$,$,(#950,#960),#600);
+
+/* Especificación del tipo */
+#800=IFCELECTRICGENERATORTYPE ('gabcdeghijklmnopqrst800',#100,$,$,$,$,$,$,’STANDBY’,.USERDEFINED.);
+
+/* Relación entre tipo e instancia */
+#900=IFCRELDEFINESBYTYPE('abcdefghijklmnopqrst900', #2, $, $, (#950,#960), #800);
+
+/* Elementos a los que se asigna la medición */
+#950=IFCENERGYCONVERSIONDEVICE('abcdefghijklmnopqrst950',#100,$,$,$,#10001,#10002,$);
+#960=IFCENERGYCONVERSIONDEVICE('abcdefghijklmnopqrst960',#100,$,$,$,#10003,#10004,$);
+        						</code></pre>
+            </section>
+
+            <section>
+                <img src="static/images/physicalquantities.JPG">
+            </section>
+
+        </section>
+
+        <section>
+
+            <section>
+                <p class="block">📒 Propiedades de tipo.</p>
+                <p class="block">Específicas de cada tipo de elemento (e.g. <b>IfcWallType</b>).</p>
+            </section>
+
+            <section
+                    data-background-iframe="https://standards.buildingsmart.org/IFC/RELEASE/IFC2x3/FINAL/HTML/ifcsharedbldgelements/lexical/ifcwalltype.htm"
+                    data-background-interactive>
+            </section>
+
+        </section>
+
+        <section>
+
+            <section>
+                <h2>🐞 Errores</h2>
+                <p>Los errores más comunes al trabajar con IFC.</p>
+            </section>
+
+            <section>
+                <h2>🐞 ¿Solución?</h2>
+                <p>1. Arreglarlo con librerías</p>
+                <p>2. Reexportar el modelo</p>
+            </section>
+
+            <section>
+                <h2>🐞 Tamaño</h2>
+                <p>Más no es necesariamente mejor.</p>
+            </section>
+
+            <section>
+                <h2>🐞 Localización</h2>
+                <p>Georreferencia = IfcSite</p>
+            </section>
+
+            <section>
+                <h2>🐞 Estructura espacial</h2>
+                <p>Respetar la jerarquía de entidades</p>
+            </section>
+
+            <section>
+                <h2>🐞 Definición semántica</h2>
+                <p>Respetar las categorías</p>
+            </section>
+
+            <section>
+                <h2>🐞 Definición geométrica</h2>
+                <p>Usar cada geometría para su fin</p>
+            </section>
+
+            <section>
+                <h2>🐞 Definición de propiedades</h2>
+                <p>Cuanto más específico, mejor</p>
+            </section>
+
+            <section>
+                <h2>🐞 Falta de información</h2>
+                <p>¿Qué usos BIM vamos a darle al IFC?</p>
+            </section>
+
+        </section>
+
+        <section>
+            <h2>🎉 ¡Gracias por vuestra atención!</h2>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2/reveal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2/plugin/notes/notes.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2/plugin/markdown/markdown.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2/plugin/highlight/highlight.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+    });
+</script>
+
+</body>
+</html>
